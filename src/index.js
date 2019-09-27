@@ -33,7 +33,13 @@ function inlineSVG( options = {}) {
     var iconName = path.parse( path.basename( file.path ) ).name;
 
     if ( options.optimize ) {
-      var svgo = new SVGO();
+      var svgo = new SVGO({
+        plugins: [{
+          addAttributesToSVGElement: {
+            attributes: [ 'focusable="false"' ],
+          }
+        }],
+      });
 
       svgo
         .optimize( file.contents.toString( 'utf-8' ), optimizedSVG => {
